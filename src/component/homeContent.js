@@ -1,13 +1,12 @@
 import Pulang from "./Assets/pulang.jpeg";
 import Text from "./Assets/Text.png";
 
-import { Container } from "react-bootstrap";
 import List from "./listBook";
 
 const styles = {
   containerJumbotron: {
     display: "flex",
-    width: "995px",
+    width: "1050px",
     height: "443px",
     boxShadow: "0px 0px 15px #999999",
     backgroundColor: "#FFD9D9",
@@ -27,13 +26,13 @@ const styles = {
 
 function HomeContent() {
   return (
-    <Container>
+    <div>
       <div style={styles.containerJumbotron}>
         <img src={Text} alt="" style={styles.title} />
         <img src={Pulang} alt="" style={styles.book} />
       </div>
       <List />
-    </Container>
+    </div>
   );
 }
 

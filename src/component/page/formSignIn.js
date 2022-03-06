@@ -64,7 +64,7 @@ import cssModules from "./sign.module.css";
 const styles = {
   formSignIn: {
     width: "416px",
-    height: "479px",
+    height: "408px",
   },
 };
 
@@ -75,7 +75,6 @@ function FormSignIn(props) {
     user: {
       email: "",
       password: "",
-      fullname: "",
     },
   });
 

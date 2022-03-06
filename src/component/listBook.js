@@ -8,7 +8,15 @@ export default function List() {
   const [modalShow, setModalShow] = useState(false);
   return (
     <div style={{ marginTop: "51px" }}>
-      <h2>List Book</h2>
+      <p
+        style={{
+          fontSize: "36px",
+          fontFamily: "Times New Roman",
+          fontWeight: "bold",
+        }}
+      >
+        List Book
+      </p>
       <Row style={{ marginTop: "45px" }}>
         {listBookData.map((data, index) => (
           <Col md={3}>
@@ -17,6 +25,7 @@ export default function List() {
                 width: "14rem",
                 border: "none",
                 margin: "0px auto",
+                backgroundColor: "#F2F2F2",
               }}
             >
               <Button
@@ -28,12 +37,34 @@ export default function List() {
                   src={data.image}
                   style={{ borderRadius: "10px" }}
                 />
+                <Card.Body
+                  style={{
+                    color: "black",
+                    paddingLeft: "0px",
+                    textAlign: "left",
+                  }}
+                >
+                  <Card.Title
+                    style={{
+                      fontFamily: "Times New Roman",
+                      fontWeight: "bold",
+                      fontSize: "24px",
+                    }}
+                  >
+                    {data.title}
+                  </Card.Title>
+                  <Card.Text
+                    style={{
+                      fontFamily: "Avenir",
+                      fontSize: "18px",
+                      color: "#929292",
+                    }}
+                  >
+                    {data.author}
+                  </Card.Text>
+                </Card.Body>
               </Button>
               <PopUpUnSub show={modalShow} onHide={() => setModalShow(false)} />
-              <Card.Body>
-                <Card.Title>{data.title}</Card.Title>
-                <Card.Text>{data.author}</Card.Text>
-              </Card.Body>
             </Card>
           </Col>
         ))}

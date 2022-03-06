@@ -6,8 +6,8 @@ import { Container } from "react-bootstrap";
 import ButtonSignIn from "../buttonSignIn";
 import ButtonSignUp from "../buttonSignUp";
 
-import Logo from "../Assets/photo6129945846939234570.jpg";
-import BookImage from "../Assets/photo6129945846939234571.jpg";
+import Logo from "../Assets/Wow.png";
+import BookImage from "../Assets/book.png";
 
 const styles = {
   ImageLandingImage: {
@@ -36,22 +36,30 @@ const styles = {
 
 function LandingPage() {
   return (
-    <Container fluid>
-      <img
-        src={BookImage}
-        className="float-end"
-        style={styles.ImageLandingImage}
-        alt="imageLanding"
-      />
-      <div style={styles.containerInfo}>
-        <img src={Logo} alt="logo" style={styles.Logo} />
-        <p style={styles.paragraph}>
-          Sign-up now and subscribe to enjoy all the cool and latest books - The
-          best book rental service provider in Indonesia
-        </p>
-        <div style={styles.btnGroup}>
-          <ButtonSignUp />
-          <ButtonSignIn />
+    <Container fluid style={{ padding: "0px" }}>
+      <div
+        style={{
+          backgroundColor: "#F2F2F2",
+          height: "100vh",
+          width: "100%",
+        }}
+      >
+        <img
+          src={BookImage}
+          className="float-end"
+          style={styles.ImageLandingImage}
+          alt="imageLanding"
+        />
+        <div style={styles.containerInfo}>
+          <img src={Logo} alt="logo" style={styles.Logo} />
+          <p style={styles.paragraph}>
+            Sign-up now and subscribe to enjoy all the cool and latest books -
+            The best book rental service provider in Indonesia
+          </p>
+          <div style={styles.btnGroup}>
+            <ButtonSignUp />
+            <ButtonSignIn />
+          </div>
         </div>
       </div>
     </Container>

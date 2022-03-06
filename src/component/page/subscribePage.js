@@ -2,19 +2,17 @@ import React from "react";
 import { Container } from "react-bootstrap";
 
 import Navs from "../navs";
-import HomeContent from "../homeContent";
+import FormSub from "../formSub";
 
-function Home() {
+export default function Subscribe() {
   return (
     <Container fluid style={{ backgroundColor: "#F2F2F2" }}>
-      <div className="d-flex">
+      <div className="d-flex ">
         <Navs />
-        <div style={{ marginTop: "60px" }}>
-          <HomeContent />
+        <div style={{ margin: "auto" }}>
+          <FormSub />
         </div>
       </div>
     </Container>
   );
 }
-
-export default Home;

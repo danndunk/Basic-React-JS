@@ -1,12 +1,12 @@
 import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-import Logo from "./Assets/photo6129945846939234570.jpg";
+import Logo from "./Assets/Wow.png";
 import Profile from "./Assets/unnamed.jpg";
 
 const styles = {
   Nav: {
-    marginTop: "30px",
+    margin: "27px 40px 0px 79px",
   },
   centerNav: {
     textAlign: "center",
@@ -24,6 +24,12 @@ const styles = {
   icon: {
     marginRight: "23px",
   },
+  linkNavs: {
+    fontSize: "23px",
+    lineHeight: "101.5%",
+    color: "#929292",
+    textDecoration: "none",
+  },
 };
 
 export default function Navs() {
@@ -39,32 +45,25 @@ export default function Navs() {
       <Link to="/home" style={styles.centerNav}>
         <img src={Profile} alt="profile" style={styles.imageProfile} />
       </Link>
-      <Nav>
-        <h4> Lapiek feat Tape</h4>
-      </Nav>
-      <Nav>sss</Nav>
-      <hr style={{ width: "100%" }} />
-      <Link
-        to="/profile"
+      <div style={{ textAlign: "center" }}>
+        <p style={{ fontWeight: "900", fontSize: "24px" }}>Lapiek n Tape</p>
+      </div>
+      <div
         style={{
-          marginTop: "55px",
-          fontSize: "23px",
-          lineHeight: "101.5%",
-          color: "#929292",
+          textAlign: "center",
+          color: "#D60000",
+          fontWeight: "600",
+          fontSize: "18px",
         }}
       >
+        Not Subscribed Yet
+      </div>
+      <hr style={{ width: "100%" }} />
+      <Link to="/profile" style={{ ...styles.linkNavs, marginTop: "55px" }}>
         <i class="bi bi-person" style={styles.icon}></i>
         Profile
       </Link>
-      <Link
-        to="/subscribe"
-        style={{
-          marginTop: "85px",
-          fontSize: "23px",
-          lineHeight: "101.5%",
-          color: "#929292",
-        }}
-      >
+      <Link to="/subscribe" style={{ ...styles.linkNavs, marginTop: "85px" }}>
         <i class="bi bi-cash-coin" style={styles.icon}></i>
         Subscribe
       </Link>
@@ -72,10 +71,9 @@ export default function Navs() {
       <Link
         to="/"
         style={{
+          ...styles.linkNavs,
           marginTop: "55px",
-          fontSize: "23px",
-          lineHeight: "101.5%",
-          color: "#929292",
+          marginBottom: "30px",
         }}
       >
         <i class="bi bi-box-arrow-in-left" style={styles.icon}></i>

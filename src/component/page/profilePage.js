@@ -2,17 +2,16 @@ import React from "react";
 import { Container } from "react-bootstrap";
 
 import Navs from "../navs";
-import HomeContent from "../homeContent";
 
-function Home() {
+function Profile() {
   return (
     <Container style={{ display: "flex" }}>
       <Navs />
       <div style={{ margin: "70px" }}>
-        <HomeContent />
+        <h1>asdihasidhasidasidhasdiasdasidhasidh</h1>
       </div>
     </Container>
   );
 }
 
-export default Home;
+export default Profile;

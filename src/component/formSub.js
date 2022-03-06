@@ -43,7 +43,7 @@ export default function FormSub(props) {
 
   const handleOnSub = (e) => {
     e.preventDefault();
-    navigate("/home");
+    navigate("/home-premium");
   };
 
   return (

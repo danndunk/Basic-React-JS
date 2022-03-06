@@ -1,7 +1,7 @@
 import Pulang from "./Assets/pulang.jpeg";
 import Wow from "./Assets/Wowsss.png";
 
-import List from "./listBook";
+import ListBookPremium from "./listBookPremium";
 
 const styles = {
   containerJumbotron: {
@@ -24,16 +24,16 @@ const styles = {
   },
 };
 
-function HomeContent() {
+function HomeContentPremium() {
   return (
     <div>
       <div style={styles.containerJumbotron}>
         <img src={Wow} alt="" style={styles.title} />
         <img src={Pulang} alt="" style={styles.book} />
       </div>
-      <List />
+      <ListBookPremium />
     </div>
   );
 }
 
-export default HomeContent;
+export default HomeContentPremium;

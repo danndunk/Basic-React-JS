@@ -32,17 +32,17 @@ const styles = {
   },
 };
 
-export default function Navs() {
+export default function NavsSub() {
   return (
     <Nav Link className="flex-column" style={styles.Nav}>
-      <Link to="/home" style={styles.centerNav}>
+      <Link to="/home-premium" style={styles.centerNav}>
         <img
           src={Logo}
           alt="Logo"
           style={{ ...styles.imageLogo, transform: "rotate(-13.38deg)" }}
         />
       </Link>
-      <Link to="/home" style={styles.centerNav}>
+      <Link to="/home-premium" style={styles.centerNav}>
         <img src={Profile} alt="profile" style={styles.imageProfile} />
       </Link>
       <div style={{ textAlign: "center" }}>
@@ -51,17 +51,17 @@ export default function Navs() {
       <div
         style={{
           textAlign: "center",
-          color: "#D60000",
+          color: "#29BD11",
           fontWeight: "600",
           fontSize: "18px",
         }}
       >
-        Not Subscribed Yet
+        Subscribed
       </div>
       <hr style={{ width: "100%" }} />
       <Link
-        to="/profile"
-        style={{ ...styles.linkNavs, marginTop: "55px", pointerEvents: "none" }}
+        to="/profile-premium"
+        style={{ ...styles.linkNavs, marginTop: "55px" }}
       >
         <i class="bi bi-person" style={styles.icon}></i>
         Profile

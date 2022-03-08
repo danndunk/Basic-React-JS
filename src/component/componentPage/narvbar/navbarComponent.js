@@ -1,5 +1,5 @@
 import { Navbar, Container, NavDropdown } from "react-bootstrap";
-import Logo from "./Assets/Wow.png";
+import Logo from "../../Assets/Wow.png";
 
 const styles = {
   logo: {
@@ -12,7 +12,7 @@ export default function NavbarComponent() {
   return (
     <Navbar style={{ marginTop: "15px" }} className="fixed-top">
       <Container>
-        <Navbar.Brand href="/home-premium">
+        <Navbar.Brand href="/home">
           <img src={Logo} alt="" style={styles.logo} />
         </Navbar.Brand>
         <Navbar.Toggle />

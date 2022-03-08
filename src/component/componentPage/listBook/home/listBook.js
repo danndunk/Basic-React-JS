@@ -1,15 +1,10 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import { Row, Col, Card, Button } from "react-bootstrap";
+import React, { useState } from "react";
+import { Row, Col, Card, Button, Modal } from "react-bootstrap";
 
-import listBookData from "./data/listBookData";
+import listBookData from "../../../data/listBookData";
 
-export default function ListBookPremium() {
-  const navigate = useNavigate();
-  const handleOnDetailBook = (e) => {
-    navigate("/detail-book");
-  };
-
+export default function ListBookHome() {
+  const [modalShow, setModalShow] = useState(false);
   return (
     <div style={{ marginTop: "51px" }}>
       <p
@@ -34,7 +29,7 @@ export default function ListBookPremium() {
             >
               <Button
                 style={{ backgroundColor: "transparent", border: "none" }}
-                onClick={handleOnDetailBook}
+                onClick={() => setModalShow(true)}
               >
                 <Card.Img
                   variant="top"
@@ -68,6 +63,24 @@ export default function ListBookPremium() {
                   </Card.Text>
                 </Card.Body>
               </Button>
+              <Modal
+                show={modalShow}
+                onHide={() => setModalShow(false)}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+              >
+                <p
+                  className="text-danger"
+                  style={{
+                    textAlign: "center",
+                    fontSize: "24px",
+                    color: "#29BD11",
+                  }}
+                >
+                  please make a payment to read the latest books
+                </p>
+              </Modal>
             </Card>
           </Col>
         ))}

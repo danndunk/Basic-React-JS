@@ -1,8 +1,8 @@
 import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-import Logo from "./Assets/Wow.png";
-import Profile from "./Assets/unnamed.jpg";
+import Logo from "../../Assets/Wow.png";
+import Profile from "../../Assets/unnamed.jpg";
 
 const styles = {
   Nav: {
@@ -35,14 +35,14 @@ const styles = {
 export default function NavsSub() {
   return (
     <Nav Link className="flex-column" style={styles.Nav}>
-      <Link to="/home-premium" style={styles.centerNav}>
+      <Link to="/home" style={styles.centerNav}>
         <img
           src={Logo}
           alt="Logo"
           style={{ ...styles.imageLogo, transform: "rotate(-13.38deg)" }}
         />
       </Link>
-      <Link to="/home-premium" style={styles.centerNav}>
+      <Link to="/home" style={styles.centerNav}>
         <img src={Profile} alt="profile" style={styles.imageProfile} />
       </Link>
       <div style={{ textAlign: "center" }}>
@@ -59,10 +59,7 @@ export default function NavsSub() {
         Subscribed
       </div>
       <hr style={{ width: "100%" }} />
-      <Link
-        to="/profile-premium"
-        style={{ ...styles.linkNavs, marginTop: "55px" }}
-      >
+      <Link to="/profile" style={{ ...styles.linkNavs, marginTop: "55px" }}>
         <i class="bi bi-person" style={styles.icon}></i>
         Profile
       </Link>

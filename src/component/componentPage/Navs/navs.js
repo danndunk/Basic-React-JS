@@ -1,8 +1,8 @@
 import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-import Logo from "./Assets/Wow.png";
-import Profile from "./Assets/unnamed.jpg";
+import Logo from "../../Assets/Wow.png";
+import Profile from "../../Assets/unnamed.jpg";
 
 const styles = {
   Nav: {

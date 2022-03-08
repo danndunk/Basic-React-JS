@@ -1,8 +1,8 @@
 import React from "react";
 import { Container } from "react-bootstrap";
 
-import Navs from "../navs";
-import FormSub from "../formSub";
+import Navs from "../componentPage/Navs/navs";
+import FormSub from "../componentPage/form/formSub";
 
 export default function Subscribe() {
   return (

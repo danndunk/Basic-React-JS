@@ -1,5 +1,5 @@
 import { Button } from "react-bootstrap";
-import Profile from "./Assets/unnamed.jpg";
+import Profile from "../../Assets/unnamed.jpg";
 
 const styles = {
   containerProfile: {

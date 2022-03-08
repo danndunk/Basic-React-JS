@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Row, Col, Card, Button } from "react-bootstrap";
 
-import listBookData from "./data/listBookData";
-import PopUpUnSub from "./popUpUnSub";
+import listBookData from "../../../data/listBookData";
 
-export default function List() {
-  const [modalShow, setModalShow] = useState(false);
+export default function ListBookHomePremium() {
+  const navigate = useNavigate();
+  const handleOnDetailBook = (e) => {
+    e.preventDefault();
+    navigate("/detail-book-list");
+  };
+
   return (
     <div style={{ marginTop: "51px" }}>
       <p
@@ -30,7 +35,7 @@ export default function List() {
             >
               <Button
                 style={{ backgroundColor: "transparent", border: "none" }}
-                onClick={() => setModalShow(true)}
+                onClick={handleOnDetailBook}
               >
                 <Card.Img
                   variant="top"
@@ -64,7 +69,6 @@ export default function List() {
                   </Card.Text>
                 </Card.Body>
               </Button>
-              <PopUpUnSub show={modalShow} onHide={() => setModalShow(false)} />
             </Card>
           </Col>
         ))}

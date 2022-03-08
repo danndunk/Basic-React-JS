@@ -56,7 +56,7 @@
 import React from "react";
 import { useState } from "react";
 import { Button } from "react-bootstrap";
-import FormSignIn from "./page/formSignIn";
+import FormSignIn from "../form/formSignIn";
 
 const styles = {
   btnSignIn: {

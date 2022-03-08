@@ -1,8 +1,12 @@
 import React from "react";
 import { Form, Button, Modal } from "react-bootstrap";
 import { useState } from "react";
+
+import { useContext } from "react";
+import { UserContext } from "../../context/userContext";
+
 import { useNavigate } from "react-router-dom";
-import Logo from "./Assets/justwow.png";
+import Logo from "../../Assets/justwow.png";
 
 const styles = {
   containerForm: {
@@ -33,6 +37,8 @@ const styles = {
 };
 
 export default function FormSub(props) {
+  const [_, dispatch] = useContext(UserContext);
+
   const [modalShow, setModalShow] = useState(false);
   const navigate = useNavigate();
 
@@ -43,7 +49,19 @@ export default function FormSub(props) {
 
   const handleOnSub = (e) => {
     e.preventDefault();
-    navigate("/home-premium");
+
+    const email = document.getElementById("email").value;
+    const image = document.getElementById("image").value;
+
+    const data = {
+      email,
+      image,
+    };
+    dispatch({
+      type: "SUBSCRIBED_SUCCESS",
+      payload: data,
+    });
+    navigate("/home");
   };
 
   return (
@@ -94,6 +112,7 @@ export default function FormSub(props) {
         </p>
         <Form.Control
           type="email"
+          id="email"
           placeholder="Input your account number"
           className="mb-3 mt-4"
           style={{ background: "#BCBCBC40" }}
@@ -111,6 +130,7 @@ export default function FormSub(props) {
           </Form.Label>
           <Form.Control
             type="file"
+            id="image"
             style={{ boxSixing: "border-box" }}
             hidden
           />

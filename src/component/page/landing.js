@@ -3,8 +3,8 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import { Container } from "react-bootstrap";
-import ButtonSignIn from "../buttonSignIn";
-import ButtonSignUp from "../buttonSignUp";
+import ButtonSignIn from "../componentPage/button/buttonSignIn";
+import ButtonSignUp from "../componentPage/button/buttonSignUp";
 
 import Logo from "../Assets/Wow.png";
 import BookImage from "../Assets/book.png";

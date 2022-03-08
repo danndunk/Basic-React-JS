@@ -1,4 +1,6 @@
-import Image from "../component/Assets/pulang.jpeg";
+import Image from "../../Assets/pulang.jpeg";
+import { Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const styles = {
   book: {
@@ -32,9 +34,15 @@ const styles = {
   },
 };
 
-export default function DetailBook() {
+export default function DetailBookInUser() {
+  const navigate = useNavigate();
+
+  const handleReadBook = (e) => {
+    e.preventDefault();
+    navigate("/read-book");
+  };
   return (
-    <div style={{ width: "93%" }}>
+    <div style={{ width: "93%", marginBottom: "30px" }}>
       <div className="d-flex">
         <div>
           <img src={Image} alt="" style={styles.book} />
@@ -79,6 +87,11 @@ export default function DetailBook() {
           new character and a new quest, pushing the boundaries of genre once
           again in this wholly original fantasy
         </p>
+      </div>
+      <div className="d-flex justify-content-end">
+        <div>
+          <Button onClick={handleReadBook}>Read Book</Button>
+        </div>
       </div>
     </div>
   );

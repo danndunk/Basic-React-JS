@@ -1,7 +1,11 @@
-import Pulang from "./Assets/pulang.jpeg";
-import Wow from "./Assets/Wowsss.png";
+import Pulang from "../../Assets/pulang.jpeg";
+import Wow from "../../Assets/Wowsss.png";
 
-import ListBookPremium from "./listBookPremium";
+import ListBookHome from "../listBook/home/listBook";
+import ListBookHomePremium from "../listBook/home/listBookPremium";
+
+import { useContext } from "react";
+import { UserContext } from "../../context/userContext";
 
 const styles = {
   containerJumbotron: {
@@ -24,16 +28,17 @@ const styles = {
   },
 };
 
-function HomeContentPremium() {
+function HomeContent() {
+  const [state, _] = useContext(UserContext);
   return (
     <div>
       <div style={styles.containerJumbotron}>
         <img src={Wow} alt="" style={styles.title} />
         <img src={Pulang} alt="" style={styles.book} />
       </div>
-      <ListBookPremium />
+      {state.isSub ? <ListBookHomePremium /> : <ListBookHome />}
     </div>
   );
 }
 
-export default HomeContentPremium;
+export default HomeContent;

@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { Button } from "react-bootstrap";
-import FormSignUp from "./page/formSignUp";
+import FormSignUp from "../form/formSignUp";
 
 const styles = {
   btnSignUp: {

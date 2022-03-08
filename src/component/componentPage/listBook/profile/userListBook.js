@@ -1,8 +1,14 @@
 import { Row, Col, Card, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
-import userData from "./data/userData";
+import userData from "../../../data/userData";
 
-export default function MyListBook() {
+export default function UserListBook() {
+  const navigate = useNavigate();
+  const handleOnDetailBook = (e) => {
+    e.preventDefault();
+    navigate("/detail-book-user");
+  };
   return (
     <div style={{ marginTop: "51px" }}>
       <h2>List Book</h2>
@@ -19,6 +25,7 @@ export default function MyListBook() {
             >
               <Button
                 style={{ backgroundColor: "transparent", border: "none" }}
+                onClick={handleOnDetailBook}
               >
                 <Card.Img
                   variant="top"

@@ -1,153 +1,123 @@
-// import { Container, Form, Button } from "react-bootstrap";
-// import { Link } from "react-router-dom";
+import { Form, Button, Modal, Alert } from "react-bootstrap";
 // import { useNavigate } from "react-router-dom";
-// import cssModules from "./sign.module.css";
 
-// const styles = {
-//   formSignUp: {
-//     width: "416px",
-//     height: "479px",
-//   },
-// };
-
-// function FormSignUp() {
-//   const navigate = useNavigate();
-
-//   const HandleButtonLogin = () => {
-//     navigate("/home");
-//   };
-//   return (
-//     <Container fluid>
-//       <div className={cssModules.containerForm} style={styles.formSignUp}>
-//         <Form>
-//           <p className={cssModules.title}>Sign Up</p>
-//           <Form.Control
-//             className={cssModules.input}
-//             type="email"
-//             placeholder="Email"
-//           />
-//           <Form.Control
-//             className={cssModules.input}
-//             type="password"
-//             placeholder="Password"
-//           />
-//           <Form.Control
-//             className={cssModules.input}
-//             type="text"
-//             placeholder="Full Name"
-//           />
-//           <Button
-//             onClick={HandleButtonLogin}
-//             className={cssModules.btnSign}
-//             type="submit"
-//           >
-//             Sign Up
-//           </Button>
-//           <Link to="/signin" className={cssModules.link}>
-//             Don't have an account ? Klik <strong>Here</strong>
-//           </Link>
-//         </Form>
-//       </div>
-//     </Container>
-//   );
-// }
-
-// export default FormSignUp;
-
-import { Form, Button, Modal } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+// import { UserContext } from "../../context/userContext";
+// import { useContext } from "react";
 import { useState } from "react";
-
-// import { useNavigate } from "react-router-dom";
 import cssModules from "./sign.module.css";
 
-const styles = {
-  formSignUp: {
-    width: "416px",
-    height: "479px",
-  },
-};
+import { API } from "../../config/api";
 
 function FormSignUp(props) {
-  const navigate = useNavigate();
-  const [state, setState] = useState({
-    isLogin: false,
-    user: {
-      email: "",
-      password: "",
-      fullname: "",
-    },
-  });
+  const { setIsRegister } = props;
+  // const navigate = useNavigate();
 
-  const handleOnChange = (e) => {
-    setState({
-      ...state,
-      [e.target.name]: e.target.value,
-    });
-    console.log(e.target.value);
+  const switchToSignIn = () => {
+    setIsRegister(true);
   };
 
-  const handleOnSubmit = (e) => {
-    e.preventDefault();
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-    const fullName = document.getElementById("fullname").value;
-    setState({
-      isLogin: true,
-      user: {
-        email,
-        password,
-        fullName,
-      },
+  // const [state, dispatch] = useContext(UserContext);
+
+  const [message, setMessage] = useState(null);
+
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+    fullname: "",
+  });
+
+  const { email, password, fullname } = form;
+
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
     });
-    navigate("/home");
+  };
+
+  const handleOnSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+        },
+      };
+
+      const body = JSON.stringify(form);
+
+      const response = await API.post("/register", body, config);
+      console.log(response);
+
+      if (response.data.status == "success") {
+        const alert = (
+          <Alert variant="success" className="py-1">
+            Success
+          </Alert>
+        );
+        setMessage(alert);
+      } else {
+        const alert = (
+          <Alert variant="danger" className="py-1">
+            {response.data.message}
+          </Alert>
+        );
+        setMessage(alert);
+      }
+    } catch (error) {
+      const alert = (
+        <Alert variant="danger" className="py-1">
+          Failed
+        </Alert>
+      );
+      setMessage(alert);
+      console.log(error);
+    }
   };
 
   return (
-    <Modal
-      {...props}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <div className={cssModules.containerForm} style={styles.formSignUp}>
-        <Form onSubmit={handleOnSubmit}>
-          <p className={cssModules.title}>Sign Up</p>
-          <Form.Control
-            className={cssModules.input}
-            onChange={handleOnChange}
-            id="email"
-            value={state.email}
-            name="email"
-            type="email"
-            placeholder="Email"
-          />
-          <Form.Control
-            className={cssModules.input}
-            onChange={handleOnChange}
-            value={state.password}
-            id="password"
-            name="password"
-            type="password"
-            placeholder="Password"
-          />
-          <Form.Control
-            className={cssModules.input}
-            value={state.fullname}
-            onChange={handleOnChange}
-            id="fullname"
-            name="fullname"
-            type="text"
-            placeholder="Full Name"
-          />
-          <Button className={cssModules.btnSign} type="submit">
-            Sign Up
-          </Button>
-          <Link to="/" className={cssModules.link}>
-            Don't have an account ? Klik <strong>Here</strong>
-          </Link>
-        </Form>
-      </div>
+    <Modal {...props} centered aria-labelledby="contained-modal-title-vcenter">
+      <Form onSubmit={handleOnSubmit} style={{ margin: "0px auto" }}>
+        <p className={cssModules.title}>Sign Up</p>
+        {message}
+        <Form.Control
+          className={cssModules.input}
+          id="email"
+          value={email}
+          onChange={handleChange}
+          name="email"
+          type="email"
+          placeholder="Email"
+        />
+        <Form.Control
+          className={cssModules.input}
+          value={password}
+          onChange={handleChange}
+          id="password"
+          name="password"
+          type="password"
+          placeholder="Password"
+        />
+        <Form.Control
+          className={cssModules.input}
+          value={fullname}
+          onChange={handleChange}
+          id="fullname"
+          name="fullname"
+          type="text"
+          placeholder="Full Name"
+        />
+        <Button className={cssModules.btnSign} type="submit">
+          Sign Up
+        </Button>
+        <p
+          onClick={switchToSignIn}
+          className={cssModules.link}
+          style={{ cursor: "pointer" }}
+        >
+          Already have an account ? Klik <strong>Here</strong>
+        </p>
+      </Form>
     </Modal>
   );
 }

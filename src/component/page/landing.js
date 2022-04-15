@@ -1,10 +1,14 @@
-import React from "react";
-// import { Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import React, { useState } from "react";
 
-import { Container } from "react-bootstrap";
-import ButtonSignIn from "../componentPage/button/buttonSignIn";
-import ButtonSignUp from "../componentPage/button/buttonSignUp";
+import { useContext } from "react";
+import { UserContext } from "../context/userContext";
+// import { useNavigate } from "react-router-dom";
+
+import FormSignIn from "../componentPage/form/formSignIn";
+import FormSignUp from "../componentPage/form/formSignUp";
+
+import { Container, Button } from "react-bootstrap";
 
 import Logo from "../Assets/Wow.png";
 import BookImage from "../Assets/book.png";
@@ -35,6 +39,24 @@ const styles = {
 };
 
 function LandingPage() {
+  const [state] = useContext(UserContext);
+
+  console.log(state);
+
+  const [isRegister, setIsRegister] = useState(null);
+
+  const [show, setShow] = useState(false);
+
+  const switchSignUp = () => {
+    setIsRegister(false);
+    setShow(true);
+  };
+
+  const switchSignIn = () => {
+    setIsRegister(true);
+    setShow(true);
+  };
+
   return (
     <Container fluid style={{ padding: "0px" }}>
       <div
@@ -57,10 +79,35 @@ function LandingPage() {
             The best book rental service provider in Indonesia
           </p>
           <div style={styles.btnGroup}>
-            <ButtonSignUp />
-            <ButtonSignIn />
+            <Button
+              onClick={switchSignUp}
+              className="btn btn-login px-5 me-5"
+              style={{ background: "#D60000" }}
+            >
+              Sign Up
+            </Button>
+            <Button
+              onClick={switchSignIn}
+              className="btn btn-login px-5"
+              style={{ background: "#CDCDCD", border: "none", color: "black" }}
+            >
+              Sign In
+            </Button>
           </div>
         </div>
+        {isRegister ? (
+          <FormSignIn
+            show={show}
+            onHide={() => setShow(false)}
+            setIsRegister={setIsRegister}
+          />
+        ) : (
+          <FormSignUp
+            show={show}
+            onHide={() => setShow(false)}
+            setIsRegister={setIsRegister}
+          />
+        )}
       </div>
     </Container>
   );

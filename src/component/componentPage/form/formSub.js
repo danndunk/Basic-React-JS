@@ -1,12 +1,13 @@
 import React from "react";
-import { Form, Button, Modal } from "react-bootstrap";
+import { Form, Button, Modal, Alert } from "react-bootstrap";
 import { useState } from "react";
 
 import { useContext } from "react";
 import { UserContext } from "../../context/userContext";
-
 import { useNavigate } from "react-router-dom";
 import Logo from "../../Assets/justwow.png";
+
+import { API } from "../../config/api";
 
 const styles = {
   containerForm: {
@@ -37,30 +38,72 @@ const styles = {
 };
 
 export default function FormSub(props) {
-  const [_, dispatch] = useContext(UserContext);
+  const [state, _] = useContext(UserContext);
+  const [preview, setPreview] = useState(null);
+  const [message, setMessage] = useState(null);
+
+  const [form, setForm] = useState({
+    idUser: "",
+    transferProof: "",
+  });
 
   const [modalShow, setModalShow] = useState(false);
   const navigate = useNavigate();
 
-  const handleOnSubmit = (e) => {
-    e.preventDefault();
-    setModalShow(true);
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]:
+        e.target.type === "file" ? e.target.files : e.target.value,
+    });
+
+    if (e.target.type === "file") {
+      let url = URL.createObjectURL(e.target.files[0]);
+      setPreview(url);
+    }
   };
 
-  const handleOnSub = (e) => {
+  const handleOnSubmit = async (e) => {
+    try {
+      e.preventDefault();
+
+      const config = {
+        headers: {
+          "Content-type": "multipart/form-data",
+        },
+      };
+
+      const formData = new FormData();
+      formData.set(
+        "transferProof",
+        form.transferProof[0],
+        form.transferProof[0].name
+      );
+      formData.set("idUser", state.user.id);
+
+      const response = await API.post("/transaction", formData, config);
+
+      if (response.data.status === "success") {
+        setModalShow(true);
+      } else {
+        const alert = (
+          <Alert
+            variant="success"
+            className="py-1 d-flex justify-content-center"
+          >
+            {response.data.message}
+          </Alert>
+        );
+        setMessage(alert);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleOnClick = (e) => {
     e.preventDefault();
-
-    const email = document.getElementById("email").value;
-    const image = document.getElementById("image").value;
-
-    const data = {
-      email,
-      image,
-    };
-    dispatch({
-      type: "SUBSCRIBED_SUCCESS",
-      payload: data,
-    });
+    setModalShow(false);
     navigate("/home");
   };
 
@@ -111,30 +154,37 @@ export default function FormSub(props) {
           : 0981312323
         </p>
         <Form.Control
-          type="email"
-          id="email"
+          type="number"
+          onChange={handleChange}
+          name="accNumber"
           placeholder="Input your account number"
           className="mb-3 mt-4"
           style={{ background: "#BCBCBC40" }}
         />
-        <Form.Group controlId="formFile" className="mb-3">
-          <Form.Label
-            className="d-flex justify-content-between align-items-center"
-            style={{ ...styles.inputFile, fontWeight: "900" }}
-          >
-            Attache proof of transfer
-            <i
-              class="bi bi-paperclip"
-              style={{ fontSize: "27px", cursor: "pointer" }}
-            ></i>
-          </Form.Label>
+        <Form.Group className="mb-3">
           <Form.Control
+            onChange={handleChange}
             type="file"
+            name="transferProof"
             id="image"
             style={{ boxSixing: "border-box" }}
-            hidden
           />
         </Form.Group>
+        {preview && (
+          <div className="d-flex justify-content-center">
+            <img
+              src={preview}
+              style={{
+                maxWidth: "200px",
+                maxHeight: "200px",
+                objectFit: "cover",
+                margin: "10px 0px",
+              }}
+              alt="preview"
+            />
+          </div>
+        )}
+        {message}
         <Button variant="primary" type="submit" style={styles.button}>
           Submit
         </Button>
@@ -142,17 +192,14 @@ export default function FormSub(props) {
 
       <Modal
         show={modalShow}
-        onHide={() => setModalShow(false)}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
         <Button
-          onClick={handleOnSub}
+          onClick={handleOnClick}
           style={{
             backgroundColor: "transparent",
-            boxShadow: "none",
-            boder: "none",
           }}
         >
           <p

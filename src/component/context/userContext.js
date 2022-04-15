@@ -3,7 +3,7 @@ import { createContext, useReducer } from "react";
 export const UserContext = createContext();
 
 const initialState = {
-  isSub: false,
+  isLogin: false,
   user: {},
 };
 
@@ -11,16 +11,21 @@ const reducer = (state, action) => {
   const { type, payload } = action;
 
   switch (type) {
-    case "SUBSCRIBED_SUCCESS":
+    case "USER_SUCCESS":
+    case "LOGIN_SUCCESS":
+      localStorage.setItem("token", payload.token);
       return {
-        isSub: true,
+        isLogin: true,
         user: payload,
       };
-    case "NOT_SUBSCRIBED":
+    case "AUTH_ERROR":
+    case "LOGOUT":
+      localStorage.removeItem("token");
       return {
-        isSub: false,
+        isLogin: false,
         user: {},
       };
+
     default:
       throw new Error();
   }

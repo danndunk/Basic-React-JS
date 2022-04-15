@@ -1,15 +1,24 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import { Row, Col, Card, Button } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { Row, Col, Card } from "react-bootstrap";
 
-import listBookData from "../../../data/listBookData";
+import { API } from "../../../config/api";
 
 export default function ListBookHomePremium() {
-  const navigate = useNavigate();
-  const handleOnDetailBook = (e) => {
-    e.preventDefault();
-    navigate("/detail-book-list");
+  const [books, setBooks] = useState([]);
+
+  const getBooks = async () => {
+    try {
+      const response = await API.get("/books");
+      setBooks(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  useEffect(() => {
+    getBooks();
+  }, []);
 
   return (
     <div style={{ marginTop: "51px" }}>
@@ -23,7 +32,7 @@ export default function ListBookHomePremium() {
         List Book
       </p>
       <Row style={{ marginTop: "45px" }}>
-        {listBookData.map((data, index) => (
+        {books.map((data) => (
           <Col md={3}>
             <Card
               style={{
@@ -33,14 +42,18 @@ export default function ListBookHomePremium() {
                 backgroundColor: "#F2F2F2",
               }}
             >
-              <Button
-                style={{ backgroundColor: "transparent", border: "none" }}
-                onClick={handleOnDetailBook}
+              <Link
+                to={`/detail-book-list/` + data.id}
+                style={{ textDecoration: "none" }}
               >
                 <Card.Img
                   variant="top"
-                  src={data.image}
-                  style={{ borderRadius: "10px" }}
+                  src={data.bookCover}
+                  style={{
+                    borderRadius: "10px",
+                    widht: "100%",
+                    maxHeight: "300px",
+                  }}
                 />
                 <Card.Body
                   style={{
@@ -68,7 +81,7 @@ export default function ListBookHomePremium() {
                     {data.author}
                   </Card.Text>
                 </Card.Body>
-              </Button>
+              </Link>
             </Card>
           </Col>
         ))}

@@ -1,9 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col, Card, Button, Modal } from "react-bootstrap";
 
-import listBookData from "../../../data/listBookData";
+import { API } from "../../../config/api";
 
 export default function ListBookHome() {
+  const [books, setBooks] = useState([]);
+
+  const getBooks = async () => {
+    try {
+      const response = await API.get("/books");
+      setBooks(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getBooks();
+  }, []);
+
   const [modalShow, setModalShow] = useState(false);
   return (
     <div style={{ marginTop: "51px" }}>
@@ -17,8 +32,8 @@ export default function ListBookHome() {
         List Book
       </p>
       <Row style={{ marginTop: "45px" }}>
-        {listBookData.map((data, index) => (
-          <Col md={3}>
+        {books.map((data, index) => (
+          <Col md={3} key={index}>
             <Card
               style={{
                 width: "14rem",
@@ -33,8 +48,8 @@ export default function ListBookHome() {
               >
                 <Card.Img
                   variant="top"
-                  src={data.image}
-                  style={{ borderRadius: "10px" }}
+                  src={data.bookCover}
+                  style={{ borderRadius: "10px", height: "300px" }}
                 />
                 <Card.Body
                   style={{
@@ -73,7 +88,7 @@ export default function ListBookHome() {
                 <p
                   className="text-danger"
                   style={{
-                    textAlign: "center",
+                    margin: "10px auto",
                     fontSize: "24px",
                     color: "#29BD11",
                   }}

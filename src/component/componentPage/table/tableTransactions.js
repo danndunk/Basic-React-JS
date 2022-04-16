@@ -82,8 +82,8 @@ export default function TableTransaction() {
           </tr>
         </thead>
         <tbody>
-          {transactions?.map((data) => (
-            <tr>
+          {transactions?.map((data, index) => (
+            <tr key={index}>
               <td>{data.id}</td>
               <td>{data.user.fullname}</td>
               <td>{data.transferProof}</td>

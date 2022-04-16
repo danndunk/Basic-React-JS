@@ -9,10 +9,12 @@ import Subscribe from "./component/page/subscribe";
 import Profile from "./component/page/profile";
 import AddBookPage from "./component/page/addBook";
 import ReadBook from "./component/page/readBook";
+import EditBook from "./component/page/editBook";
 import DetailBookInUserPage from "./component/page/detailBookInUserList";
 import DetailBookInHomePage from "./component/page/detailBookInHomeList";
 import ListTransactions from "./component/page/ListTransactions";
 import FormProfile from "./component/componentPage/form/formEditProfile";
+import ListBookAdmin from "./component/page/listBookAdmin";
 
 import { API, setAuthToken } from "./component/config/api";
 import { UserContext } from "./component/context/userContext";
@@ -71,9 +73,12 @@ function App() {
         <Route exact path="/home" element={<Home />} />
         <Route exact path="/profile" element={<Profile />} />
         <Route exact path="/subscribe" element={<Subscribe />} />
-        <Route exact path="/read-book/:id" element={<ReadBook />} />
         <Route exact path="/add-book" element={<AddBookPage />} />
+        <Route exact path="/read-book/:id" element={<ReadBook />} />
+        <Route exact path="/edit-book/:id" element={<EditBook />} />
         <Route exact path="/edit-profile" element={<FormProfile />} />
+        <Route exact path="/list-books" element={<ListBookAdmin />} />
+
         <Route
           exact
           path="/detail-book-user/:id"

@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { API } from "../../config/api";
 
@@ -20,12 +21,15 @@ const styles = {
   },
 };
 
-export default function FormAddBook() {
+export default function FormEditBook() {
+  const navigate = useNavigate();
+  const { id } = useParams();
   const [message, setMessage] = useState(null);
   const [preview, setPreview] = useState(null);
 
   const [form, setForm] = useState({
     title: "",
+    author: "",
     publicationDate: "",
     pages: "",
     isbn: "",
@@ -33,6 +37,29 @@ export default function FormAddBook() {
     bookFile: "",
     bookCover: "",
   });
+
+  const getBook = async (id) => {
+    try {
+      const response = await API.get("/book/" + id);
+      console.log(response.data.data.book);
+
+      setForm({
+        title: response.data.data.book.title,
+        author: response.data.data.book.author,
+        publicationDate: response.data.data.book.publicationDate,
+        pages: response.data.data.book.pages,
+        isbn: response.data.data.book.isbn,
+        about: response.data.data.book.about,
+      });
+      setPreview(response.data.data.book.bookCover);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getBook(id);
+  }, []);
 
   const handleChange = (e) => {
     setForm({
@@ -60,16 +87,21 @@ export default function FormAddBook() {
       };
 
       const formData = new FormData();
+
       formData.set("title", form.title);
       formData.set("publicationDate", form.publicationDate);
       formData.set("pages", form.pages);
       formData.set("author", form.author);
       formData.set("isbn", form.isbn);
       formData.set("about", form.about);
-      formData.set("bookFile", form.bookFile[0], form.bookFile[0].name);
-      formData.set("bookCover", form.bookCover[0], form.bookCover[0].name);
+      if (form.bookFile) {
+        formData.set("bookFile", form.bookFile[0], form.bookFile[0].name);
+      }
+      if (form.bookCover) {
+        formData.set("bookCover", form.bookCover[0], form.bookCover[0].name);
+      }
 
-      const response = await API.post("/book", formData, config);
+      const response = await API.patch("/book/" + id, formData, config);
 
       if (response.data.status === "success") {
         const alert = (
@@ -77,10 +109,11 @@ export default function FormAddBook() {
             variant="success"
             className="py-1 d-flex justify-content-center"
           >
-            Success Add Book
+            Success Edit Book
           </Alert>
         );
         setMessage(alert);
+        navigate("/list-books");
       } else {
         const alert = (
           <Alert
@@ -100,8 +133,9 @@ export default function FormAddBook() {
   return (
     <div style={{ width: "70%", margin: "180px auto 130px auto" }}>
       <Form onSubmit={handleOnSubmit}>
-        <h3 className="mb-5">Add Book</h3>
+        <h3 className="mb-5">Edit Book</h3>
         <Form.Control
+          value={form.title}
           onChange={handleChange}
           name="title"
           type="text"
@@ -111,6 +145,7 @@ export default function FormAddBook() {
           required
         />
         <Form.Control
+          value={form.publicationDate}
           onChange={handleChange}
           name="publicationDate"
           type="date"
@@ -120,6 +155,7 @@ export default function FormAddBook() {
           required
         />
         <Form.Control
+          value={form.pages}
           onChange={handleChange}
           name="pages"
           type="number"
@@ -129,6 +165,7 @@ export default function FormAddBook() {
           required
         />
         <Form.Control
+          value={form.author}
           onChange={handleChange}
           name="author"
           type="text"
@@ -138,6 +175,7 @@ export default function FormAddBook() {
           required
         />
         <Form.Control
+          value={form.isbn}
           onChange={handleChange}
           name="isbn"
           type="text"
@@ -147,6 +185,7 @@ export default function FormAddBook() {
           required
         />
         <Form.Control
+          value={form.about}
           onChange={handleChange}
           name="about"
           as="textarea"
@@ -200,7 +239,7 @@ export default function FormAddBook() {
           style={styles.button}
           className="d-flex justify-content-end align-items-center"
         >
-          Add Book
+          Edit Book
           <i
             className="bi bi-journal-arrow-up"
             style={{ marginLeft: "8px", fontSize: "20px" }}

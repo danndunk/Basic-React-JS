@@ -5,29 +5,19 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
 import { useContext } from "react";
 
-const styles = {
-  logo: {
-    width: "130px",
-    transform: "rotate(-13.38deg)",
-  },
-  dropdown: {
-    background: "transparent",
-    border: "none",
-    color: "blue",
-    marginRight: "35px",
-    fontSize: "30px",
-  },
-};
-
 export default function NavbarComponent() {
   const navigate = useNavigate();
-  const [state, dispatch] = useContext(UserContext);
+  const [_, dispatch] = useContext(UserContext);
 
   const logout = () => {
     dispatch({
       type: "LOGOUT",
     });
     navigate("/");
+  };
+
+  const listBook = (e) => {
+    navigate("/list-books");
   };
 
   return (
@@ -49,8 +39,19 @@ export default function NavbarComponent() {
               <i
                 className="bi bi-journal-arrow-up"
                 style={{ marginLeft: "8px", fontSize: "20px" }}
-              ></i>
+              />
               Add Book
+            </NavDropdown.Item>
+            <hr />
+            <NavDropdown.Item
+              className="d-flex justify-content-between align-items-center"
+              onClick={listBook}
+            >
+              <i
+                className="bi bi-card-list"
+                style={{ marginLeft: "8px", fontSize: "20px" }}
+              />
+              List Book
             </NavDropdown.Item>
             <hr />
             <NavDropdown.Item
@@ -60,7 +61,7 @@ export default function NavbarComponent() {
               <i
                 className="bi bi-box-arrow-left"
                 style={{ marginLeft: "8px", fontSize: "20px" }}
-              ></i>
+              />
               Logout
             </NavDropdown.Item>
           </Dropdown.Menu>
@@ -69,3 +70,17 @@ export default function NavbarComponent() {
     </Navbar>
   );
 }
+
+const styles = {
+  logo: {
+    width: "130px",
+    transform: "rotate(-13.38deg)",
+  },
+  dropdown: {
+    background: "transparent",
+    border: "none",
+    color: "blue",
+    marginRight: "35px",
+    fontSize: "30px",
+  },
+};
